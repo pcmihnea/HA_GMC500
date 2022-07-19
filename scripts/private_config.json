@@ -1,0 +1,13 @@
+{
+	"MQTT":
+	{
+		"HOSTNAME": "192.168.0.x",
+		"USERNAME": "_username_",
+		"PASSWORD": "_password_"
+	},
+	"GMC500":
+	{
+		"USER_ID": "555",
+		"DEV_ID": "01234"
+	}
+}
