@@ -18,7 +18,8 @@ def gmc500():
     try:
         if request.args['AID'] == GMC_USER_ID and request.args['GID'] == GMC_DEV_ID:
             mqtt_publish('homeassistant/sensor/GMC500/state',
-                         {"CPM": request.args['CPM'], "ACPM": request.args['ACPM'], "uSV": request.args['uSV']},
+                         {'CPM': float(request.args['CPM']), 'ACPM': float(request.args['ACPM']),
+                          'uSV': float(request.args['uSV'])},
                          False)
     except Exception:
         logging.exception('EXCEPTION')
