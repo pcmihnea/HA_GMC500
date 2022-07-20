@@ -32,25 +32,7 @@ As a alternative, a separate PC can also be used for interfacing to the GMC500.
 - Run the [Python script](scripts/mqtt_gmc500.py) as root: `sudo gunicorn mqtt_gmc500:app -b 0.0.0.0:80`
 
 ## 3. Configure the HomeAssistant instance
-Add the following lines in `configuration.yaml` file (present inside the user-defined `homeassistant` configuration folder):  
-
-```
-sensor:
-  - platform: mqtt
-    name: CPM
-    unique_id: "gmc500_cpm"
-    state_topic: "gmc500/sensors/values"
-    value_template: "{{ value_json.CPM }}"
-    unit_of_measurement: "cpm"
-  - platform: mqtt
-    name: uSV
-    unique_id: "gmc500_usv"
-    state_topic: "gmc500/sensors/values"
-    value_template: "{{ value_json.uSV }}"
-    unit_of_measurement: "μSV"
-```
-- If all is well, after a HA restart the newly created sensors shall be available.
-
+User configuration is not necessary, as [MQTT auto-discovery](https://www.home-assistant.io/docs/mqtt/discovery/) is implemented.  
 
 # Who/where/when?
 All the reverse-engineering, development, integration, and documentation efforts are based on the latest software and hardware versions available at the time of writing (July 2022), and licensed under the GNU General Public License v3.0.

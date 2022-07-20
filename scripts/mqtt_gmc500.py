@@ -17,16 +17,19 @@ GMC_DEV_ID = ''
 def gmc500():
     try:
         if request.args['AID'] == GMC_USER_ID and request.args['GID'] == GMC_DEV_ID:
-            for value in ['CPM', 'ACPM', 'uSV']:
-                publish.single('gmc500/values/' + value,
-                               hostname=PRIVATE_CONFIG['MQTT']['HOSTNAME'], port=1883, client_id='gmc500',
-                               auth={'username': PRIVATE_CONFIG['MQTT']['USERNAME'],
-                                     'password': PRIVATE_CONFIG['MQTT']['PASSWORD']},
-                               payload=float(request.args[value]))
+            mqtt_publish('homeassistant/sensor/GMC500/state',
+                         {"CPM": request.args['CPM'], "ACPM": request.args['ACPM'], "uSV": request.args['uSV']},
+                         False)
     except Exception:
         logging.exception('EXCEPTION')
-    finally:
-        return "OK.ERR0", 200
+    return "OK.ERR0", 200
+
+
+def mqtt_publish(topic, payload, retain):
+    publish.single(hostname=PRIVATE_CONFIG['MQTT']['HOSTNAME'], port=1883, client_id='gmc500',
+                   auth={'username': PRIVATE_CONFIG['MQTT']['USERNAME'],
+                         'password': PRIVATE_CONFIG['MQTT']['PASSWORD']},
+                   topic=topic, payload=json.dumps(payload), retain=retain)
 
 
 if __name__ == '__main__':
@@ -38,6 +41,13 @@ if __name__ == '__main__':
             pass
         GMC_USER_ID = PRIVATE_CONFIG['GMC500']['USER_ID']
         GMC_DEV_ID = PRIVATE_CONFIG['GMC500']['DEV_ID']
+        for value in ['CPM', 'ACPM', 'uSV']:
+            mqtt_publish('homeassistant/sensor/GMC500_' + value + '/config',
+                         {"name": 'GMC500_' + value,
+                          "state_topic": 'homeassistant/sensor/GMC500/state',
+                          "value_template": '{{ value_json.' + value + ' }}',
+                          "device_class": 'aqi', "unit_of_measurement": value},
+                         True)
         app.run(port=HTTP_PORT, host='0.0.0.0')
     except Exception:
         logging.exception('EXCEPTION')
