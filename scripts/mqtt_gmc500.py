@@ -47,7 +47,8 @@ if __name__ == '__main__':
                          {"name": 'GMC500_' + value,
                           "state_topic": 'homeassistant/sensor/GMC500/state',
                           "value_template": '{{ value_json.' + value + ' }}',
-                          "device_class": 'aqi', "unit_of_measurement": value},
+                          "device_class": 'aqi', "unit_of_measurement": value,
+                          "unique_id": GMC_USER_ID + GMC_USER_ID + value},
                          True)
         app.run(port=HTTP_PORT, host='0.0.0.0')
     except Exception:
