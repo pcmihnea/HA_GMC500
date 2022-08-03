@@ -35,6 +35,7 @@ def mqtt_publish(topic, payload, retain):
 
 if __name__ == '__main__':
     try:
+        logging.info('INIT')
         f = open('private_config.json')
         PRIVATE_CONFIG = json.load(f)
         f.close()
@@ -51,6 +52,7 @@ if __name__ == '__main__':
                           "unique_id": GMC_USER_ID + GMC_USER_ID + value,
                           "expire_after": 600},
                          True)
+        logging.info('LOOP')
         app.run(port=HTTP_PORT, host='0.0.0.0')
     except Exception:
         logging.exception('EXCEPTION')
