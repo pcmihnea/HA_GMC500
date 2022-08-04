@@ -22,15 +22,18 @@ def gmc500():
                           'uSV': float(request.args['uSV'])},
                          False)
     except Exception:
-        logging.exception('EXCEPTION')
+        logging.exception('REQUEST')
     return "OK.ERR0", 200
 
 
 def mqtt_publish(topic, payload, retain):
-    publish.single(hostname=PRIVATE_CONFIG['MQTT']['HOSTNAME'], port=1883, client_id='gmc500',
-                   auth={'username': PRIVATE_CONFIG['MQTT']['USERNAME'],
-                         'password': PRIVATE_CONFIG['MQTT']['PASSWORD']},
-                   topic=topic, payload=json.dumps(payload), retain=retain)
+    try:
+        publish.single(hostname=PRIVATE_CONFIG['MQTT']['HOSTNAME'], port=1883, client_id='gmc500',
+                       auth={'username': PRIVATE_CONFIG['MQTT']['USERNAME'],
+                             'password': PRIVATE_CONFIG['MQTT']['PASSWORD']},
+                       topic=topic, payload=json.dumps(payload), retain=retain)
+    except Exception:
+        logging.exception('MQTT_PUBLISH')
 
 
 if __name__ == '__main__':
@@ -55,4 +58,4 @@ if __name__ == '__main__':
         logging.info('LOOP')
         app.run(port=HTTP_PORT, host='0.0.0.0')
     except Exception:
-        logging.exception('EXCEPTION')
+        logging.exception('MAIN')
