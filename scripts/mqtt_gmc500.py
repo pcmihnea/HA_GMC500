@@ -52,7 +52,7 @@ try:
                       "state_topic": 'homeassistant/sensor/GMC500/state',
                       "value_template": '{{ value_json.' + value + ' }}',
                       "device_class": 'aqi', "unit_of_measurement": value,
-                      "unique_id": GMC_USER_ID + GMC_USER_ID + value,
+                      "unique_id": GMC_USER_ID + GMC_DEV_ID + value,
                       "expire_after": SAMPLE_INTERVAL * 2},
                      True)
     logging.info('LOOP')
