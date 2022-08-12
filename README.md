@@ -28,11 +28,11 @@ As a alternative, a separate PC can also be used for interfacing to the GMC500.
 - Install the required python libraries: `sudo pip install Flask paho_mqtt gunicorn` ([why gunicorn?](https://flask.palletsprojects.com/en/2.0.x/deploying))
 - Edit the [`private_config.json`](scripts/private_config.json) file by configuring the:
 	- used MQTT broker (`HOSTNAME`, `USERNAME`, `PASSWORD`),  
-	- user-specific values defined at step one (`USER_ID`, `DEV_ID`).  
+	- user-specific values defined at step one (`USER_ID`, `DEV_ID`, `PERIOD`).  
 - Run the [Python script](scripts/mqtt_gmc500.py) as root: `sudo gunicorn mqtt_gmc500:app -b 0.0.0.0:80`
 
 ## 3. Configure the HomeAssistant instance
 User configuration is not necessary, as [MQTT auto-discovery](https://www.home-assistant.io/docs/mqtt/discovery/) is implemented.  
 
 # Who/where/when?
-All the reverse-engineering, development, integration, and documentation efforts are based on the latest software and hardware versions available at the time of writing (July 2022), and licensed under the GNU General Public License v3.0.
+All the reverse-engineering, development, integration, and documentation efforts are based on the latest software and hardware versions available at the time of writing (August 2022), and licensed under the GNU General Public License v3.0.
