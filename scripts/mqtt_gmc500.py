@@ -53,7 +53,7 @@ try:
                       "value_template": '{{ value_json.' + value + ' }}',
                       "device_class": 'aqi', "unit_of_measurement": value,
                       "unique_id": GMC_USER_ID + GMC_DEV_ID + value,
-                      "expire_after": SAMPLE_INTERVAL * 2},
+                      "expire_after": SAMPLE_INTERVAL * 5},
                      True)
     logging.info('LOOP')
     if __name__ == '__main__':
