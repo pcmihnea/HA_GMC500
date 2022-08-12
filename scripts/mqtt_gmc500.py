@@ -36,27 +36,27 @@ def mqtt_publish(topic, payload, retain):
         logging.exception('MQTT_PUBLISH')
 
 
-if __name__ == '__main__':
-    try:
-        logging.info('INIT')
-        f = open('private_config.json')
-        PRIVATE_CONFIG = json.load(f)
-        f.close()
-        if bool(PRIVATE_CONFIG['MQTT']) and bool(PRIVATE_CONFIG['GMC500']):
-            pass
-        GMC_USER_ID = PRIVATE_CONFIG['GMC500']['USER_ID']
-        GMC_DEV_ID = PRIVATE_CONFIG['GMC500']['DEV_ID']
-        SAMPLE_INTERVAL = PRIVATE_CONFIG['GMC500']['PERIOD'] * 60
-        for value in ['CPM', 'ACPM', 'uSV']:
-            mqtt_publish('homeassistant/sensor/GMC500_' + value + '/config',
-                         {"name": 'GMC500_' + value,
-                          "state_topic": 'homeassistant/sensor/GMC500/state',
-                          "value_template": '{{ value_json.' + value + ' }}',
-                          "device_class": 'aqi', "unit_of_measurement": value,
-                          "unique_id": GMC_USER_ID + GMC_USER_ID + value,
-                          "expire_after": SAMPLE_INTERVAL * 2},
-                         True)
-        logging.info('LOOP')
+try:
+    logging.info('INIT')
+    f = open('private_config.json')
+    PRIVATE_CONFIG = json.load(f)
+    f.close()
+    if bool(PRIVATE_CONFIG['MQTT']) and bool(PRIVATE_CONFIG['GMC500']):
+        pass
+    GMC_USER_ID = PRIVATE_CONFIG['GMC500']['USER_ID']
+    GMC_DEV_ID = PRIVATE_CONFIG['GMC500']['DEV_ID']
+    SAMPLE_INTERVAL = PRIVATE_CONFIG['GMC500']['PERIOD'] * 60
+    for value in ['CPM', 'ACPM', 'uSV']:
+        mqtt_publish('homeassistant/sensor/GMC500_' + value + '/config',
+                     {"name": 'GMC500_' + value,
+                      "state_topic": 'homeassistant/sensor/GMC500/state',
+                      "value_template": '{{ value_json.' + value + ' }}',
+                      "device_class": 'aqi', "unit_of_measurement": value,
+                      "unique_id": GMC_USER_ID + GMC_USER_ID + value,
+                      "expire_after": SAMPLE_INTERVAL * 2},
+                     True)
+    logging.info('LOOP')
+    if __name__ == '__main__':
         app.run(port=HTTP_PORT, host='0.0.0.0')
-    except Exception:
-        logging.exception('MAIN')
+except Exception:
+    logging.exception('MAIN')
