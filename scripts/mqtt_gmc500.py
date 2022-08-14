@@ -1,5 +1,4 @@
 import json
-import logging
 
 import paho.mqtt.publish as publish
 from flask import Flask, request
@@ -22,22 +21,18 @@ def gmc500():
                           'uSV': float(request.args['uSV'])},
                          False)
     except Exception:
-        logging.exception('REQUEST')
+        pass
     return "OK.ERR0", 200
 
 
 def mqtt_publish(topic, payload, retain):
-    try:
-        publish.single(hostname=PRIVATE_CONFIG['MQTT']['HOSTNAME'], port=1883, client_id='gmc500',
-                       auth={'username': PRIVATE_CONFIG['MQTT']['USERNAME'],
-                             'password': PRIVATE_CONFIG['MQTT']['PASSWORD']},
-                       topic=topic, payload=json.dumps(payload), retain=retain)
-    except Exception:
-        logging.exception('MQTT_PUBLISH')
+    publish.single(hostname=PRIVATE_CONFIG['MQTT']['HOSTNAME'], port=1883, client_id='gmc500',
+                   auth={'username': PRIVATE_CONFIG['MQTT']['USERNAME'],
+                         'password': PRIVATE_CONFIG['MQTT']['PASSWORD']},
+                   topic=topic, payload=json.dumps(payload), retain=retain)
 
 
 try:
-    logging.info('INIT')
     f = open('private_config.json')
     PRIVATE_CONFIG = json.load(f)
     f.close()
@@ -55,8 +50,7 @@ try:
                       "unique_id": GMC_USER_ID + GMC_DEV_ID + value,
                       "expire_after": SAMPLE_INTERVAL * 5},
                      True)
-    logging.info('LOOP')
     if __name__ == '__main__':
         app.run(port=HTTP_PORT, host='0.0.0.0')
 except Exception:
-    logging.exception('MAIN')
+    pass
