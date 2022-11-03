@@ -46,7 +46,9 @@ try:
                      {"name": 'GMC500_' + value,
                       "state_topic": 'homeassistant/sensor/GMC500/state',
                       "value_template": '{{ value_json.' + value + ' }}',
-                      "device_class": 'aqi', "unit_of_measurement": value,
+                      "device_class": 'aqi',
+                      "state_class": 'measurement',
+                      "unit_of_measurement": value,
                       "unique_id": GMC_USER_ID + GMC_DEV_ID + value,
                       "expire_after": SAMPLE_INTERVAL * 4},
                      True)
