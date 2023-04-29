@@ -33,7 +33,7 @@ The Geiger counter can be configured on-device, via the buttons and LCD screen, 
 - Run the [Python script](scripts/mqtt_gmc500_native.py) as root: `sudo gunicorn mqtt_gmc500_native:app -b 0.0.0.0:80`.  
 
 ### 2.2. Proxy server
-- Edit the [`http_relay.ino`](appl/http_relay.ino) file by configuring:
+- Edit the [`config.h`](appl/http_relay/config.h) file by configuring:
 	- WiFi credentials (`WIFI_SSID`, `WIFI_PSWD`),  
 	- AppDaemon IP address (same as HomeAssistant) and port (default 5050) (`HTTP_CLIENT_ADDR`).  
 - Install the official [Arduino ESP32 package](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html), then build and flash the project.  
@@ -51,4 +51,4 @@ mqtt_gmc500:
 User configuration is not necessary, as [MQTT auto-discovery](https://www.home-assistant.io/docs/mqtt/discovery/) is implemented.  
 
 # Who/where/when?
-All the reverse-engineering, development, integration, and documentation efforts are based on the latest software and hardware versions available at the time of writing (March 2023), and licensed under the GNU General Public License v3.0.
+All the reverse-engineering, development, integration, and documentation efforts are based on the latest software and hardware versions available at the time of writing (May 2023), and licensed under the GNU General Public License v3.0.

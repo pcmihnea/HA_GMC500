@@ -3,13 +3,9 @@
 #include <WiFiClient.h>
 #include <HTTPClient.h>
 #include <WebServer.h>
+#include "config.h"
 
-
-#define WIFI_SSID             ("_SSID_")
-#define WIFI_PSWD             ("_PSWD_")
-#define HTTP_CLIENT_ADDR      ("http://_IP_ADDRESS_:5050")
-
-#define HTTP_CLIENT_URI       "/api/appdaemon/gmc")
+#define HTTP_CLIENT_URI       ("/api/appdaemon/gmc")
 #define HTTP_SERVER_URI       (HTTP_CLIENT_URI)
 #define HTTP_SERVER_ARGS_MAX  (5)
 #define HTTP_SERVER_CPM_POS   (2)
