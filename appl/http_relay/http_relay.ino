@@ -65,9 +65,8 @@ void loop(void) {
   server.handleClient();
   if (true == newValues) {
     digitalWrite(LED_BUILTIN, HIGH);
-    client.begin(httpClientAddr);
-    client.addHeader("Content-Type", "application/json");
-    (void)client.POST("{\"CPM\":" + measValues[0] + ",\"ACPM\":" + measValues[1] + ",\"uSV\":" + measValues[2] + "}");
+    client.begin(httpClientAddr + "?CPM=" + measValues[0] + "&ACPM=" + measValues[1] + "&uSV=" + measValues[2]);
+    (void)client.GET();
     client.end();
     newValues = false;
     digitalWrite(LED_BUILTIN, LOW);
