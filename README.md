@@ -8,7 +8,7 @@ The measurements are transmitted periodically as unsecured HTTP GET requests, wi
 The device allows customizing a few parameters of the HTTP requests, most notably the destination IP/hostname. As such, local data sampling is possible as a faster and more reliable solution, given no dependency on Internet resources.  
 There are two approaches in implementing the receiving (HTTP) server:  
 - native, running directly on a [Home Assistant Docker installation](https://www.home-assistant.io/installation/linux#install-home-assistant-container), or on a separate device.  
-- proxy, by means of a ESP32 used as a relay between the GMC500 and the HomeAssistant installation running [AppDaemon add-on](https://github.com/hassio-addons/addon-appdaemon). The external device is one method to circumvent Appdaemon's [extremely limited](https://appdaemon.readthedocs.io/en/latest/APPGUIDE.html#restful-api-support) REST API, both in terms of supported method (only `POST`) and server port (cannot be set to `80`).  
+- proxy, by means of a ESP32 used as a relay between the GMC500 and the HomeAssistant installation running [AppDaemon add-on](https://github.com/hassio-addons/addon-appdaemon). The external device is one method to circumvent Appdaemon's [imited](https://appdaemon.readthedocs.io/en/latest/APPGUIDE.html#restful-api-support) REST API, since it doesn't support `80` as its server port.  
 
 # How?
 ## 1. Configure the device
