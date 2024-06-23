@@ -13,12 +13,18 @@
 #define HTTP_SERVER_uSV_POS   (4)
 
 
+hw_timer_t *timer = NULL;
 WebServer server(80);
 HTTPClient client;
 
 String httpClientAddr = HTTP_CLIENT_ADDR;
 String measValues[3] = {"", "", ""};
 bool newValues = false;
+
+
+void ARDUINO_ISR_ATTR onTimer() {
+  ESP.restart();
+}
 
 void handleNotOK() {
   digitalWrite(LED_BUILTIN, HIGH);
@@ -44,6 +50,14 @@ void handleOK() {
 void setup(void) {
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
+
+  if (0 != RESTART_TIMER_MSEC) {
+    timer = timerBegin(8*1000);
+    if (timer != NULL) {
+      timerAttachInterrupt(timer, &onTimer);
+      timerAlarm(timer, 8*RESTART_TIMER_MSEC, false, 0);
+    }
+  }
 
   httpClientAddr += HTTP_CLIENT_URI;
   WiFi.mode(WIFI_STA);

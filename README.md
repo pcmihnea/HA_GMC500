@@ -8,7 +8,7 @@ The measurements are transmitted periodically as unsecured HTTP GET requests, wi
 The device allows customizing a few parameters of the HTTP requests, most notably the destination IP/hostname. As such, local data sampling is possible as a faster and more reliable solution, given no dependency on Internet resources.  
 There are two approaches in implementing the receiving (HTTP) server:  
 - native, running directly on a [Home Assistant Docker installation](https://www.home-assistant.io/installation/linux#install-home-assistant-container), or on a separate device.  
-- proxy, by means of a ESP32 used as a relay between the GMC500 and the HomeAssistant installation running [AppDaemon add-on](https://github.com/hassio-addons/addon-appdaemon). The external device is one method to circumvent Appdaemon's [imited](https://appdaemon.readthedocs.io/en/latest/APPGUIDE.html#restful-api-support) REST API, since it doesn't support `80` as its server port.  
+- proxy, by means of a ESP32 used as a relay between the GMC500 and the HomeAssistant installation running [AppDaemon add-on](https://github.com/hassio-addons/addon-appdaemon). The external device is one method to circumvent Appdaemon's [limited](https://appdaemon.readthedocs.io/en/latest/APPGUIDE.html#restful-api-support) REST API, since it doesn't support `80` as its server port.  
 
 # How?
 ## 1. Configure the device
@@ -35,7 +35,8 @@ The Geiger counter can be configured on-device, via the buttons and LCD screen, 
 ### 2.2. Proxy server
 - Edit the [`config.h`](appl/http_relay/config.h) file by configuring:
 	- WiFi credentials (`WIFI_SSID`, `WIFI_PSWD`),  
-	- AppDaemon IP address (same as HomeAssistant) and port (default 5050) (`HTTP_CLIENT_ADDR`).  
+	- AppDaemon IP address (same as HomeAssistant) and port (default 5050) (`HTTP_CLIENT_ADDR`),   
+	- Optionally, enable the auto-reboot feature (as a workaround for WiFi sporadic issues, such as disconnects) by setting the reset period (`RESTART_TIMER_MSEC`). A value of `0` disables it.   
 - Install the official [Arduino ESP32 package](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html), then build and flash the project.  
 - Copy the [http_gmc500_appdaemon.py](scripts/mqtt_gmc500_appdaemon.py) file to the Appdaemon [app folder](https://github.com/hassio-addons/addon-appdaemon/blob/main/appdaemon/DOCS.md) (for eg. `/config/appdaemon/apps` in a Home Assistant OS installation).
 - Modify the values inside the script as per the ones defined at step one (`USER_ID`, `DEV_ID`).  
@@ -51,4 +52,4 @@ mqtt_gmc500:
 User configuration is not necessary, as [MQTT auto-discovery](https://www.home-assistant.io/docs/mqtt/discovery/) is implemented.  
 
 # Who/where/when?
-All the reverse-engineering, development, integration, and documentation efforts are based on the latest software and hardware versions available at the time of writing (May 2023), and licensed under the GNU General Public License v3.0.
+All the reverse-engineering, development, integration, and documentation efforts are based on the latest software and hardware versions available at the time of writing (June 2024), and licensed under the GNU General Public License v3.0.
